@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "OSBuilder 歡迎您！",
+    "subtitle": "開始建立您的客製化作業系統映像",
+    "button": "開始"
+  },
+  "config": {
+    "menu": {
+      "install": "安裝驅動/軟體包/服務",
+      "logo": "替換 Logo",
+      "unpack": "解壓 Image",
+      "script": "預安裝腳本"
+    },
+    "title": {
+      "install": "安裝驅動/軟體包/服務",
+      "logo": "替換 Logo",
+      "unpack": "解壓 Image",
+      "script": "預安裝腳本"
+    },
+    "description": {
+      "install": "此處應有可篩選和選擇的列表介面。",
+      "logo": "此處應有檔案選擇器，帶有預覽功能。",
+      "unpack": "此處應有檔案選擇器。",
+      "script": "此處應有可滾動的程式碼編輯器或文字區域，用於輸入腳本。"
+    },
+    "button": {
+      "prev": "上一步",
+      "next": "建立"
+    }
+  },
+  "build": {
+    "title": "OS Builder 進度",
+    "button": {
+      "start": "開始建立",
+      "building": "建立中...",
+      "cancel": "取消建立",
+      "startOver": "重新開始",
+      "autoScrollOn": "自動捲動開啟",
+      "autoScrollOff": "自動捲動關閉"
+    },
+    "status": {
+      "label": "狀態：",
+      "ready": "準備就緒",
+      "starting": "開始中...",
+      "building": "建立中...",
+      "building...": "建立中...",
+      "completed": "建立映像完成",
+      "buildimagecompleted": "建立映像完成",
+      "failed": "建立映像失敗",
+      "buildimagefailed": "建立映像失敗",
+      "cancelled": "已取消",
+      "error": "錯誤"
+    },
+    "log": {
+      "title": "建立日誌"
+    },
+    "message": {
+      "success": "您的作業系統映像已編譯和建立。",
+      "failure": "啟動建立過程失敗",
+      "cancelFailure": "取消建立過程失敗"
+    },
+    "dialog": {
+      "ok": "確定",
+      "success": "成功",
+      "failure": "失敗"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "欢迎使用 OSBuilder！",
+    "subtitle": "开始构建您的定制操作系统映像",
+    "button": "开始"
+  },
+  "config": {
+    "menu": {
+      "install": "安装驱动/软件包/服务",
+      "logo": "替换 Logo",
+      "unpack": "解压 Image",
+      "script": "预安装脚本"
+    },
+    "title": {
+      "install": "安装驱动/软件包/服务",
+      "logo": "替换 Logo",
+      "unpack": "解压 Image",
+      "script": "预安装脚本"
+    },
+    "description": {
+      "install": "此处应有可筛选和选择的列表界面。",
+      "logo": "此处应有文件选择器，带有预览功能。",
+      "unpack": "此处应有文件选择器。",
+      "script": "此处应有可滚动的代码编辑器或文本区域，用于输入脚本。"
+    },
+    "button": {
+      "prev": "上一步",
+      "next": "建立"
+    }
+  },
+  "build": {
+    "title": "OS Builder 进度",
+    "button": {
+      "start": "开始构建",
+      "building": "构建中...",
+      "cancel": "取消构建",
+      "startOver": "重新开始",
+      "autoScrollOn": "自动滚动开启",
+      "autoScrollOff": "自动滚动关闭"
+    },
+    "status": {
+      "label": "状态：",
+      "ready": "准备就绪",
+      "starting": "开始中...",
+      "building": "构建中...",
+      "building...": "构建中...",
+      "completed": "构建镜像完成",
+      "buildimagecompleted": "构建镜像完成",
+      "failed": "构建镜像失败",
+      "buildimagefailed": "构建镜像失败",
+      "cancelled": "已取消",
+      "error": "错误"
+    },
+    "log": {
+      "title": "构建日志"
+    },
+    "message": {
+      "success": "您的操作系统镜像已编译和构建。",
+      "failure": "启动构建过程失败",
+      "cancelFailure": "取消构建过程失败"
+    },
+    "dialog": {
+      "ok": "确定",
+      "success": "成功",
+      "failure": "失败"
+    }
+  }
+}

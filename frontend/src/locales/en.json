@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "Welcome to OSBuilder!",
+    "subtitle": "Start building your customized OS image",
+    "button": "Start"
+  },
+  "config": {
+    "menu": {
+      "install": "Install Drivers/Software/Services",
+      "logo": "Replace Logo",
+      "unpack": "Unpack Image",
+      "script": "Pre-install Script"
+    },
+    "title": {
+      "install": "Install Drivers/Software/Services",
+      "logo": "Replace Logo",
+      "unpack": "Unpack Image",
+      "script": "Pre-install Script"
+    },
+    "description": {
+      "install": "A filterable and selectable list interface should be here.",
+      "logo": "A file selector with a preview function should be here.",
+      "unpack": "A file selector should be here.",
+      "script": "A scrollable code editor or text area for entering scripts should be here."
+    },
+    "button": {
+      "prev": "Previous",
+      "next": "Build"
+    }
+  },
+  "build": {
+    "title": "OS Builder Progress",
+    "button": {
+      "start": "Start Build",
+      "building": "Building...",
+      "cancel": "Cancel Build",
+      "startOver": "Start Over",
+      "autoScrollOn": "Auto Scroll ON",
+      "autoScrollOff": "Auto Scroll OFF"
+    },
+    "status": {
+      "label": "Status:",
+      "ready": "Ready",
+      "starting": "Starting...",
+      "building": "Building...",
+      "building...": "Building...",
+      "completed": "Build Image Completed",
+      "buildimagecompleted": "Build Image Completed",
+      "failed": "Build Image Failed",
+      "buildimagefailed": "Build Image Failed",
+      "cancelled": "Cancelled",
+      "error": "Error"
+    },
+    "log": {
+      "title": "Build Log"
+    },
+    "message": {
+      "success": "Your OS image has been compiled and built.",
+      "failure": "Failed to start build process",
+      "cancelFailure": "Failed to cancel build process"
+    },
+    "dialog": {
+      "ok": "OK",
+      "success": "Success",
+      "failure": "Failure"
+    }
+  }
+}
