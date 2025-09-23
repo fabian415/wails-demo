@@ -1,10 +1,10 @@
 <template>
   <el-container style="height: 100%;">
-    <el-aside width="250px" style="background-color: #fff; border-right: 1px solid var(--el-border-color-light);">
+    <el-aside width="250px" style="background-color: var(--el-bg-color-overlay); border-right: 1px solid var(--el-border-color-light);">
       <el-menu
         default-active="1"
         @select="(index) => activeMenu = index"
-        style="height: 100%; border-right: none;"
+        style="height: 100%; border-right: none; background-color: var(--el-bg-color-overlay);"
       >
         <el-menu-item index="1">
           <el-icon><Files /></el-icon>

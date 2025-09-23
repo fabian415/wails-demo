@@ -1,6 +1,6 @@
 <template>
   <div class="welcome-container">
-    <el-icon :size="80" color="#409eff"><Cpu /></el-icon>
+    <el-icon :size="80" style="color: var(--el-color-primary);"><Cpu /></el-icon>
     <h1 class="title">{{ $t('welcome.title') }}</h1>
     <p class="subtitle">{{ $t('welcome.subtitle') }}</p>
     <el-button type="primary" size="large" @click="start">{{ $t('welcome.button') }}</el-button>

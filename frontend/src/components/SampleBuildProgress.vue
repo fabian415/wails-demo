@@ -287,6 +287,8 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--el-bg-color);
+  color: var(--el-text-color-primary);
 }
 
 .header {
@@ -295,12 +297,12 @@ export default {
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid var(--el-border-color-light);
 }
 
 .header h2 {
   margin: 0;
-  color: #333;
+  color: var(--el-text-color-primary);
   font-size: 24px;
 }
 
@@ -325,30 +327,30 @@ export default {
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--el-color-primary);
+  color: var(--el-color-white);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--el-color-primary-light-3);
 }
 
 .btn-danger {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--el-color-danger);
+  color: var(--el-color-white);
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: #c82333;
+  background-color: var(--el-color-danger-light-3);
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--el-color-info);
+  color: var(--el-color-white);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: #545b62;
+  background-color: var(--el-color-info-light-3);
 }
 
 .btn-sm {
@@ -357,12 +359,12 @@ export default {
 }
 
 .btn-active {
-  background-color: #28a745;
+  background-color: var(--el-color-success);
 }
 
 .progress-section {
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background: var(--el-bg-color-page);
+  border: 1px solid var(--el-border-color-lighter);
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
@@ -382,7 +384,7 @@ export default {
 
 .status-label {
   font-weight: 600;
-  color: #495057;
+  color: var(--el-text-color-secondary);
 }
 
 .status-value {
@@ -393,28 +395,28 @@ export default {
 }
 
 .status-ready {
-  background-color: #e9ecef;
-  color: #6c757d;
+  background-color: var(--el-color-info-light-9);
+  color: var(--el-color-info);
 }
 
 .status-building {
-  background-color: #cce5ff;
-  color: #0066cc;
+  background-color: var(--el-color-primary-light-9);
+  color: var(--el-color-primary);
 }
 
 .status-success {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: var(--el-color-success-light-9);
+  color: var(--el-color-success);
 }
 
 .status-error {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: var(--el-color-danger-light-9);
+  color: var(--el-color-danger);
 }
 
 .status-cancelled {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: var(--el-color-warning-light-9);
+  color: var(--el-color-warning);
 }
 
 .progress-bar-container {
@@ -426,7 +428,7 @@ export default {
 .progress-bar {
   flex: 1;
   height: 20px;
-  background-color: #e9ecef;
+  background-color: var(--el-border-color-lighter);
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -434,7 +436,7 @@ export default {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #007bff, #0056b3);
+  background: linear-gradient(90deg, var(--el-color-primary), var(--el-color-primary-light-3));
   border-radius: 10px;
   transition: width 0.3s ease;
   position: relative;
@@ -463,14 +465,14 @@ export default {
 
 .progress-text {
   font-weight: 600;
-  color: #495057;
+  color: var(--el-text-color-secondary);
   min-width: 40px;
   text-align: right;
 }
 
 .log-section {
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background: var(--el-bg-color-page);
+  border: 1px solid var(--el-border-color-lighter);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -480,13 +482,13 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background-color: #e9ecef;
-  border-bottom: 1px solid #dee2e6;
+  background-color: var(--el-fill-color-lighter);
+  border-bottom: 1px solid var(--el-border-color-lighter);
 }
 
 .log-header h3 {
   margin: 0;
-  color: #495057;
+  color: var(--el-text-color-primary);
   font-size: 18px;
 }
 
@@ -498,11 +500,15 @@ export default {
 .log-container {
   height: 400px;
   overflow-y: auto;
-  background-color: #1e1e1e;
+  background-color: #1e1e1e; /* Keep dark for contrast */
   color: #d4d4d4;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 13px;
   line-height: 1.4;
+}
+
+html.dark .log-container {
+  background-color: #1e1e1e; /* Explicitly dark */
 }
 
 .log-content {
@@ -557,55 +563,42 @@ export default {
   100% { transform: rotate(360deg); }
 }
 
-.error-dialog {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.error-content {
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.error-content h3 {
-  margin: 0 0 15px 0;
-  color: #dc3545;
-}
-
-.error-content p {
-  margin: 0 0 20px 0;
-  color: #495057;
-}
-
-/* Scrollbar styling */
-.log-container::-webkit-scrollbar {
+/* Scrollbar styling for dark theme */
+html.dark .log-container::-webkit-scrollbar {
   width: 8px;
 }
 
-.log-container::-webkit-scrollbar-track {
+html.dark .log-container::-webkit-scrollbar-track {
   background: #2d2d2d;
 }
 
-.log-container::-webkit-scrollbar-thumb {
+html.dark .log-container::-webkit-scrollbar-thumb {
   background: #555;
   border-radius: 4px;
 }
 
-.log-container::-webkit-scrollbar-thumb:hover {
+html.dark .log-container::-webkit-scrollbar-thumb:hover {
   background: #777;
 }
+
+/* Scrollbar styling for light theme */
+html:not(.dark) .log-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+html:not(.dark) .log-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+html:not(.dark) .log-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+html:not(.dark) .log-container::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
 
 /* Responsive design */
 @media (max-width: 768px) {
