@@ -226,8 +226,13 @@ func (a *App) BuildImage(buildStream string, logStream string, adminPassword str
 	// Write initial log
 	writeLog(a.ctx, logStream, logPath, "[INFO] Sample BSP image build started.")
 
+	// Use a WaitGroup to wait for goroutines to finish
+	var wg sync.WaitGroup
+	wg.Add(2) // We have two goroutines to wait for
+
 	// Goroutine to read stdout
 	go func() {
+		defer wg.Done() // Decrement counter when goroutine finishes
 		scanner := bufio.NewScanner(stdoutPipe)
 		for scanner.Scan() {
 			select {
@@ -276,6 +281,7 @@ func (a *App) BuildImage(buildStream string, logStream string, adminPassword str
 
 	// Goroutine to read stderr
 	go func() {
+		defer wg.Done() // Decrement counter when goroutine finishes
 		scanner := bufio.NewScanner(stderrPipe)
 		for scanner.Scan() {
 			select {
@@ -297,6 +303,9 @@ func (a *App) BuildImage(buildStream string, logStream string, adminPassword str
 		}
 	}()
 
+	// 先等 goroutine 處理 stdout/stderr
+	wg.Wait()
+
 	// Wait for command to complete
 	err = cmd.Wait()
 	if err != nil {
@@ -312,7 +321,6 @@ func (a *App) BuildImage(buildStream string, logStream string, adminPassword str
 		return false
 	}
 
-	time.Sleep(3 * time.Second)
 	endFlag = true
 	
 	// Check final status

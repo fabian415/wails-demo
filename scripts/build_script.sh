@@ -59,32 +59,9 @@ simulate_progress() {
                 echo "[INFO] Finalizing build..."
                 ;;
             10)
-                # kill -SIGINT $$
-                # kill -SIGTERM $$
-                # 子 process / forked 命令範例
-                # (
-                #     echo "Child process starting..."
-                #     for i in {1..5}; do
-                #         echo "Child printing: $i"
-                #         sleep 1
-                #         exit 1
-                #         sleep 10
-                #     done
-                #     echo "Child process done."
-                # ) &  # 注意 & 表示 background
-
-                # child_pid=$!
-                # echo "Child PID: $child_pid"
-
-                # # 父 process 等待子 process 結束
-                # wait $child_pid
-                # child_exit_code=$?
-
-                # echo "Child exit code: $child_exit_code"
-                for i in {1..1000}; do
-                    echo "Dummy Code: $i"
-                    sleep 0.01
-                done
+                # for i in {1..3000}; do
+                #     echo "Dummy Code: $i"
+                # done
                 # sleep 10
                 echo "[SUCCESS] BSP Build Progress: 100%"
                 echo "[SUCCESS] Script build completed successfully!"
