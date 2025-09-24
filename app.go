@@ -43,6 +43,110 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
+// SelectFileOptions defines the options for the SelectFile dialog
+type SelectFileOptions struct {
+	Title   string   `json:"title"`
+	Filters []string `json:"patterns"`
+}
+
+// SelectFile opens a file dialog with the given options
+func (a *App) SelectFile(options string) (string, error) {
+	var opts SelectFileOptions
+	err := json.Unmarshal([]byte(options), &opts)
+	if err != nil {
+		return "", fmt.Errorf("invalid options for SelectFile: %w", err)
+	}
+
+	var filters []runtime.FileFilter
+	if len(opts.Filters) > 0 {
+		filters = append(filters, runtime.FileFilter{
+			DisplayName: "Files",
+			Pattern:     strings.Join(opts.Filters, ";"),
+		})
+	}
+
+	return runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title:   opts.Title,
+		Filters: filters,
+	})
+}
+
+// SelectDirectory opens a directory dialog
+func (a *App) SelectDirectory(title string) (string, error) {
+	return runtime.OpenDirectoryDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: title,
+	})
+}
+
+
+// SaveConfig saves the configuration to build.conf
+func (a *App) SaveConfig(configData string) error {
+	var config map[string]string
+	err := json.Unmarshal([]byte(configData), &config)
+	if err != nil {
+		return fmt.Errorf("invalid config format: %w", err)
+	}
+
+	file, err := os.Create("build.conf")
+	if err != nil {
+		return fmt.Errorf("failed to create build.conf: %w", err)
+	}
+	defer file.Close()
+
+	writer := bufio.NewWriter(file)
+	for key, value := range config {
+		// Basic escaping for quotes in value
+		escapedValue := strings.ReplaceAll(value, "\"", "\"")
+		line := fmt.Sprintf("%s=\"%s\"\n", key, escapedValue)		
+		_, err := writer.WriteString(line)
+		if err != nil {
+			return fmt.Errorf("failed to write to build.conf: %w", err)
+		}
+	}
+
+	return writer.Flush()
+}
+
+// LoadConfig loads the configuration from build.conf
+func (a *App) LoadConfig() (string, error) {
+	file, err := os.Open("build.conf")
+	if err != nil {
+		if os.IsNotExist(err) {
+			return "{}", nil // Return empty JSON if file doesn't exist
+		}
+		return "", fmt.Errorf("failed to open build.conf: %w", err)
+	}
+	defer file.Close()
+
+	config := make(map[string]string)
+	scanner := bufio.NewScanner(file)
+	// Regex to parse KEY="value" format, handling escaped quotes
+	re := regexp.MustCompile(`^([^=]+)=\"(.*)\"`)
+
+	for scanner.Scan() {
+		matches := re.FindStringSubmatch(scanner.Text())
+		if len(matches) == 3 {
+			key := matches[1]
+			value := matches[2]
+			// Basic un-escaping for quotes in value
+			unescapedValue := strings.ReplaceAll(value, "\\\"", "\"")
+			config[key] = unescapedValue
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return "", fmt.Errorf("failed to read build.conf: %w", err)
+	}
+
+	configJSON, err := json.Marshal(config)
+	if err != nil {
+		return "", fmt.Errorf("failed to serialize config to JSON: %w", err)
+	}
+
+	return string(configJSON), nil
+}
+
+
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
@@ -117,6 +221,7 @@ func (a *App) BuildImage(buildStream string, logStream string, adminPassword str
 	// Variables to track progress
 	cumulativePercent := 0
 	preStatus := 0 // 0: idle, 1: failed, 2: success
+	endFlag := false
 
 	// Write initial log
 	writeLog(a.ctx, logStream, logPath, "[INFO] Sample BSP image build started.")
@@ -127,30 +232,31 @@ func (a *App) BuildImage(buildStream string, logStream string, adminPassword str
 		for scanner.Scan() {
 			select {
 			case <-ctx.Done():
-				// 當 context 被取消時，退出 goroutine
-				writeLog(a.ctx, logStream, logPath, "[ERROR] Build BSP image cancelled by user")
+				if !endFlag {
+					// 當 context 被取消時，退出 goroutine
+					writeLog(a.ctx, logStream, logPath, "[ERROR] Build BSP image cancelled by user")
 
-				cmdMu.Lock()
-				if cmd != nil && cmd.Process != nil {
-					// 使用 syscall.Kill 來向進程發送 SIGINT 信號 - Linux
-					err := syscall.Kill(cmd.Process.Pid, syscall.SIGINT)
-					if err != nil {
-						writeLog(a.ctx, logStream, logPath, "[ERROR] Send SIGINT command failed")
-					} else {
-						writeLog(a.ctx, logStream, logPath, "[INFO] Send SIGINT command successfully")
+					cmdMu.Lock()
+					if cmd != nil && cmd.Process != nil {
+						// 使用 syscall.Kill 來向進程發送 SIGINT 信號 - Linux
+						err := syscall.Kill(cmd.Process.Pid, syscall.SIGINT)
+						if err != nil {
+							writeLog(a.ctx, logStream, logPath, "[ERROR] Send SIGINT command failed")
+						} else {
+							writeLog(a.ctx, logStream, logPath, "[INFO] Send SIGINT command successfully")
+						}
 					}
-				}
-				cmdMu.Unlock()
+					cmdMu.Unlock()
 
-				result := BuildResult{
-					Message:   "Build image cancelled by user",
-					Status:    "Build Image Failed",
-					Percent:   cumulativePercent,
-					PreStatus: 1,
+					result := BuildResult{
+						Message:   "Build image cancelled by user",
+						Status:    "Build Image Failed",
+						Percent:   cumulativePercent,
+						PreStatus: 1,
+					}
+					resultJSON, _ := json.Marshal(result)
+					runtime.EventsEmit(a.ctx, buildStream, string(resultJSON))
 				}
-				resultJSON, _ := json.Marshal(result)
-				runtime.EventsEmit(a.ctx, buildStream, string(resultJSON))
-
 				return
 			default:
 				line := scanner.Text()
@@ -207,7 +313,8 @@ func (a *App) BuildImage(buildStream string, logStream string, adminPassword str
 	}
 
 	time.Sleep(3 * time.Second)
-
+	endFlag = true
+	
 	// Check final status
 	if preStatus != 2 && preStatus != 1 {
 		writeLog(a.ctx, logStream, logPath, "[ERROR] Build ended unexpectedly!")

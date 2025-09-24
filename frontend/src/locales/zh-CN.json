@@ -5,27 +5,60 @@
     "button": "开始"
   },
   "config": {
-    "menu": {
-      "install": "安装驱动/软件包/服务",
-      "logo": "替换 Logo",
-      "unpack": "解压 Image",
-      "script": "预安装脚本"
+    "options": {
+      "iso": {
+        "title": "ISO 镜像",
+        "description": "选择来源 ISO 或 IMG 映像文件。"
+      },
+      "deb": {
+        "title": "DEB 软件包",
+        "description": "选择一个包含 .deb 软件包的文件夹。"
+      },
+      "logo": {
+        "title": "自定义 Logo",
+        "description": "选择一个自定义 Logo 文件 (PNG, JPG, SVG)。"
+      },
+      "driver": {
+        "title": "驱动程序",
+        "description": "选择一个包含驱动程序文件的文件夹。"
+      },
+      "pre_script": {
+        "title": "预执行脚本",
+        "description": "选择一个在构建前运行的脚本。"
+      },
+      "autostart": {
+        "title": "自启动服务",
+        "description": "选择一个包含服务定义文件的文件夹。"
+      },
+      "other": {
+        "title": "其他文件",
+        "description": "选择一个包含其他要打包文件的文件夹。"
+      },
+      "boot_device": {
+        "title": "启动盘",
+        "description": "选择目标启动设备 (例如 /dev/sdb)。危险：这将格式化设备。"
+      }
     },
-    "title": {
-      "install": "安装驱动/软件包/服务",
-      "logo": "替换 Logo",
-      "unpack": "解压 Image",
-      "script": "预安装脚本"
-    },
-    "description": {
-      "install": "此处应有可筛选和选择的列表界面。",
-      "logo": "此处应有文件选择器，带有预览功能。",
-      "unpack": "此处应有文件选择器。",
-      "script": "此处应有可滚动的代码编辑器或文本区域，用于输入脚本。"
+    "placeholder": {
+      "path": "请选择路径"
     },
     "button": {
       "prev": "上一步",
-      "next": "建立"
+      "next": "构建",
+      "select": "选择",
+      "save": "保存配置",
+      "load": "加载配置"
+    },
+    "dialog": {
+      "select_file": "选择文件",
+      "select_folder": "选择文件夹"
+    },
+    "message": {
+      "save_success": "配置保存成功。",
+      "save_error": "保存配置失败。",
+      "load_success": "配置加载成功。",
+      "load_error": "加载配置失败。",
+      "select_error": "选择路径时出错。"
     }
   },
   "build": {

@@ -8,3 +8,11 @@ export function CancelBuild():Promise<boolean>;
 export function GetSampleBuildLog():Promise<string>;
 
 export function Greet(arg1:string):Promise<string>;
+
+export function LoadConfig():Promise<string>;
+
+export function SaveConfig(arg1:string):Promise<void>;
+
+export function SelectDirectory(arg1:string):Promise<string>;
+
+export function SelectFile(arg1:string):Promise<string>;

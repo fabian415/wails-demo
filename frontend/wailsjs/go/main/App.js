@@ -17,3 +17,19 @@ export function GetSampleBuildLog() {
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }
+
+export function LoadConfig() {
+  return window['go']['main']['App']['LoadConfig']();
+}
+
+export function SaveConfig(arg1) {
+  return window['go']['main']['App']['SaveConfig'](arg1);
+}
+
+export function SelectDirectory(arg1) {
+  return window['go']['main']['App']['SelectDirectory'](arg1);
+}
+
+export function SelectFile(arg1) {
+  return window['go']['main']['App']['SelectFile'](arg1);
+}

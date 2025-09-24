@@ -2,6 +2,19 @@
 
 # Sample Build Script for BSP Image Building
 # This script simulates the build process with progress updates
+LOG_FILE="./build_error.log"
+
+# 建立記錄函式
+log() {
+    local level="$1"
+    shift
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$level] $*" >> "$LOG_FILE"
+}
+
+# 捕捉錯誤與中斷
+trap 'log "ERROR" "Command failed at line $LINENO (exit code $?)"; exit 1' ERR
+trap 'log "WARN"  "Script interrupted (SIGINT)"; exit 130' SIGINT
+trap 'log "WARN"  "Script terminated (SIGTERM)"; exit 143' SIGTERM
 
 echo "Starting BSP Image Build Process..."
 
@@ -46,6 +59,33 @@ simulate_progress() {
                 echo "[INFO] Finalizing build..."
                 ;;
             10)
+                # kill -SIGINT $$
+                # kill -SIGTERM $$
+                # 子 process / forked 命令範例
+                # (
+                #     echo "Child process starting..."
+                #     for i in {1..5}; do
+                #         echo "Child printing: $i"
+                #         sleep 1
+                #         exit 1
+                #         sleep 10
+                #     done
+                #     echo "Child process done."
+                # ) &  # 注意 & 表示 background
+
+                # child_pid=$!
+                # echo "Child PID: $child_pid"
+
+                # # 父 process 等待子 process 結束
+                # wait $child_pid
+                # child_exit_code=$?
+
+                # echo "Child exit code: $child_exit_code"
+                for i in {1..1000}; do
+                    echo "Dummy Code: $i"
+                    sleep 0.01
+                done
+                # sleep 10
                 echo "[SUCCESS] BSP Build Progress: 100%"
                 echo "[SUCCESS] Script build completed successfully!"
                 echo "Final image generated at: /tmp/sample_bsp_image.img"
@@ -59,7 +99,7 @@ simulate_progress() {
         fi
         
         # Simulate work time
-        sleep 2
+        sleep 1
         
         current_step=$((current_step + 1))
     done

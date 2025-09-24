@@ -42,6 +42,16 @@ html.dark {
   --el-border-color-extra-light: #2b2b2b;
 }
 
+html.dark .el-card {
+  background-color: #2c2c2c;
+  border-color: var(--el-border-color-darker);
+  color: var(--el-text-color-primary-dark);
+}
+
+html.dark .el-card__header {
+  border-bottom-color: var(--el-border-color-darker);
+}
+
 html, body {
   margin: 0;
   padding: 0;
